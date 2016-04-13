@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Web User ReBrand',
-    'category': 'web',
-    'description': """
-        Customize backend color themes
-    """,
+    'category': 'Branding',
     'author': 'Mostafa Mohamed',
     'website': 'https://eg.linkedin.com/in/mostafa-mohammed-449a8786',
-    'version': '1.1',
+    'price': 25.00,
+    'currency': 'EUR',
+    'version': '1.0.1',
     'depends': ['base', 'web', 'web_widget_color'],
     'data': ['views/res_theme_view.xml',
              'views/res_users_view.xml',
@@ -17,5 +16,6 @@
     'js': ['static/src/js/web_theme.js'],
     'css': [],
     'auto_install': False,
-    'web_preload': False,
+    'uninstall_hook': 'uninstall_hook',
+    'installable': True
 }
