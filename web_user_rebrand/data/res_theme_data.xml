@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="theme_1_test" model="res.theme">
+            <field name="name">Default Theme</field>
+            <field name="default_view">True</field>
+            <field name="top_bg_color">#EEEEF5</field>
+            <field name="top_border_color">#BCE8F1</field>
+            <field name="top_font_color">#4288CA</field>
+            <field name="top_active_font_color">#FFFFFF</field>
+            <field name="top_active_bg_color">#4288CA</field>
+            <field name="top_hover_font_color">#121212</field>
+            <field name="top_hover_bg_color">#FFFFFF</field>
+            <field name="left_bg_color">#F0F7FF</field>
+            <field name="left_main_menu_color">#4288CA</field>
+            <field name="left_sub_menu_color">#777777</field>
+            <field name="left_active_font_color">#FFFFFF</field>
+            <field name="left_active_bg_color">#4288CA</field>
+            <field name="left_hover_font_color">#121212</field>
+            <field name="left_hover_bg_color">#FFFFFF</field>
+            <field name="button_font_color">#4288CA</field>
+            <field name="button_bg_color">#4288CA</field>
+            <field name="button_bg_color_2">#FFFFFF</field>
+            <field name="header_section_bg">#F0F7FF</field>
+            <field name="header_section_font_color">#4288CA</field>
+            <field name="footer_string">Inspired By OdooTec</field>
+            <field name="title_string">OdooTec</field>
+            <field name="url_string">www.odootec.com</field>
+            <field name="odoo_color">#CA1212</field>
+            <field name="hide_help">True</field>
+            <field name="hide_account">True</field>
+        </record>
+    </data>
+</openerp>
