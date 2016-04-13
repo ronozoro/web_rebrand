@@ -54,5 +54,5 @@ You may configure user menu (top right corner) for each user individually:
 Need More Services
 =================
 
-Contact me by `email <mailto:m.dev.odoo@gmail.com>`_ or  `My Linkedin <https://eg.linkedin.com/in/mostafa-mohammed-449a8786>`_:
+Contact me by `email <mailto:m.dev.odoo@gmail.com>`_ or  `My Linkedin <https://eg.linkedin.com/in/mostafa-mohammed-449a8786>`_
 
