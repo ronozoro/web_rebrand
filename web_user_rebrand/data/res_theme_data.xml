@@ -23,9 +23,9 @@
             <field name="button_bg_color_2">#FFFFFF</field>
             <field name="header_section_bg">#F0F7FF</field>
             <field name="header_section_font_color">#4288CA</field>
-            <field name="footer_string">Inspired By OdooTec</field>
-            <field name="title_string">OdooTec</field>
-            <field name="url_string">www.odootec.com</field>
+            <field name="footer_string">Inspired By Mostafa</field>
+            <field name="title_string">Mostafa</field>
+            <field name="url_string">www.mostafa.com</field>
             <field name="odoo_color">#CA1212</field>
             <field name="hide_help">True</field>
             <field name="hide_account">True</field>
