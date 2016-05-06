@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Web User ReBrand',
+    'name': 'User Backend Branding',
     'category': 'Branding',
     'author': 'Mostafa Mohamed',
     'website': 'https://eg.linkedin.com/in/mostafa-mohammed-449a8786',
