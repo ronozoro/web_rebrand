@@ -4,7 +4,7 @@
     'category': 'Branding',
     'author': 'Mostafa Mohamed',
     'website': 'https://eg.linkedin.com/in/mostafa-mohammed-449a8786',
-    'price': 25.00,
+    'price': 10.00,
     'currency': 'EUR',
     'version': '1.0.1',
     'depends': ['base', 'web', 'web_widget_color'],
