@@ -6,13 +6,6 @@
                 <script type="text/javascript" src="/web_user_rebrand/static/src/js/web_user_rebrand.js"/>
             </xpath>
         </template>
-        <template id="web_user_rebrand.login_layout" inherit_id="web.login_layout" name="My Theme Login">
-            <xpath expr="//div[@class='oe_single_form_footer']" position="replace">
-                <div class="oe_single_form_footer">
-                    <a class="oe_login_manage_db" href="/web/database/manager">Manage Databases</a>
-                </div>
-            </xpath>
-        </template>
         <template id="web_user_rebrand.web_layout" inherit_id="web.layout">
             <xpath expr="//title" position="replace"></xpath>
             <xpath expr="//link[@rel='shortcut icon']" position="replace">

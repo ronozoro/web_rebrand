@@ -1,12 +1,13 @@
-openerp.web_user_rebrand = function (instance, m) {
-    var _t = instance.web._t,
-        QWeb = instance.web.qweb;
+odoo.define('web_user_rebrand.web_user_rebrand', function (require){
+    var core = require('web.core');
+    var WebClient = require('web.WebClient');
+    var Model = require('web.Model');
 
-    instance.web.WebClient.include({
+    WebClient.include({
         init: function (parent, client_options) {
             var self = this;
             this._super(parent, client_options);
-            new instance.web.Model("res.theme").call(
+            new Model("res.theme").call(
                 'get_the_theme', [1]).done(
                 function (result) {
                     ros = result[0]
@@ -14,11 +15,10 @@ openerp.web_user_rebrand = function (instance, m) {
                 });
         }
     });
-    instance.web.WebClient.include({
+    WebClient.include({
         set_title: function () {
-            var self = this;
             if (this.session.session_is_valid()) {
-                new instance.web.Model("res.theme").call(
+                new Model("res.theme").call(
                     'get_the_theme', [1]).done(
                     function (result) {
                         res = result[0]
@@ -117,4 +117,5 @@ openerp.web_user_rebrand = function (instance, m) {
             this._super.apply(this, arguments);
         },
     });
-};
+
+});
