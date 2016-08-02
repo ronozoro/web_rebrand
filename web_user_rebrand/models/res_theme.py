@@ -67,18 +67,13 @@ class res_theme(models.Model):
             return res
 
     def get_the_theme(self, cr, uid, ids, context=None):
-        print ('Calllllled ?')
-        print ('Calllllled ?')
-        print ('Calllllled ?')
         users = self.pool.get('res.users')
         current_user = users.browse(cr, uid, uid, context=context)
         sasa = self.search_read(cr, SUPERUSER_ID, [('default_view', '=', True)], context=context)
         if current_user.theme_id:
             mostafa = self.search_read(cr, SUPERUSER_ID, [('id', '=', current_user.theme_id.id)], context=context)
-            print('Here is the Data : ', mostafa)
             return mostafa
         elif sasa:
-            print('Here is the Data : ', sasa)
             return sasa
         else:
             return False
@@ -87,7 +82,6 @@ class res_theme(models.Model):
         users = self.pool.get('res.users')
         current_user = users.browse(cr, uid, uid, context=context)
         sasa = self.search_read(cr, SUPERUSER_ID, [('default_view', '=', True)], context=context)[0]
-        print ('sasa :',sasa['image_medium'])
         if current_user.theme_id:
             mostafa = self.search_read(cr, SUPERUSER_ID, [('id', '=', current_user.theme_id.id)], context=context)[0]
             return mostafa['image_medium']
@@ -179,48 +173,6 @@ class BinaryCustom(Binary):
                 response = http.send_file(placeholder(imgname))
 
         return response
-
-    # @http.route(["/web/static/src/img/favicon.ico"],type='http', auth="none")
-    # def fav_ico(self, dbname=None, **kw):
-    #     print 'Calllled 3 3'
-    #     imgname = 'logo.png'
-    #     default_logo_module = 'web_user_rebrand'
-    #     print request
-    #     if request.session.db:
-    #         request.env['ir.config_parameter'].get_param('web_user_rebrand.default_logo_module')
-    #     placeholder = functools.partial(get_module_resource, default_logo_module, 'static', 'src', 'img')
-    #     uid = None
-    #     if request.session.db:
-    #         dbname = request.session.db
-    #         uid = request.session.uid
-    #     elif dbname is None:
-    #         dbname = db_monodb()
-    #
-    #     if not uid:
-    #         uid = openerp.SUPERUSER_ID
-    #
-    #     if not dbname:
-    #         response = http.send_file(placeholder(imgname))
-    #     else:
-    #         try:
-    #             registry = openerp.modules.registry.Registry(dbname)
-    #             with registry.cursor() as cr:
-    #                 cr.execute("""SELECT c.logo_web, c.write_date
-    #                                 FROM res_users u
-    #                            LEFT JOIN res_company c
-    #                                   ON c.id = u.company_id
-    #                                WHERE u.id = %s
-    #                            """, (uid,))
-    #                 row = cr.fetchone()
-    #                 if row and row[0]:
-    #                     image_data = StringIO(str(row[0]).decode('base64'))
-    #                     response = http.send_file(image_data, filename=imgname, mtime=row[1])
-    #                 else:
-    #                     response = http.send_file(placeholder('nologo.png'))
-    #         except Exception:
-    #             response = http.send_file(placeholder(imgname))
-    #
-    #     return response
 
 
 BinaryCustom()
