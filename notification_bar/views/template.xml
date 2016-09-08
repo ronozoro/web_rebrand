@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="notify assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+               <script type="text/javascript" src="/notification_bar/static/src/js/notify_bar.js"/>
+                <link rel="stylesheet" href="/notification_bar/static/src/css/notify_bar.css"/>
+            </xpath>
+        </template>
+
+    </data>
+</openerp>
