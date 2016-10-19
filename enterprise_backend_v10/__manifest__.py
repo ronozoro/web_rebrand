@@ -5,7 +5,7 @@
     'author': 'Mostafa Mohamed',
     'website': 'https://eg.linkedin.com/in/mostafa-mohammed-449a8786',
     'price': 69.00,
-    'currency': 'USD',
+    'currency': 'EUR',
     'version': '1.0.1',
     'images': [
         'images/5.png',
