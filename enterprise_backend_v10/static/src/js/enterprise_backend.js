@@ -1,22 +1,221 @@
 odoo.define('enterprise_backend', function (require) {
     var core = require('web.core');
     var session = require('web.session');
+    var pyeval = require('web.pyeval');
     var Menu = require('web.Menu');
     var Model = require('web.DataModel');
     var PlannerLauncher = require('web.planner').PlannerLauncher;
     var WebClient = require('web.WebClient');
     var SearchView = require('web.SearchView');
-    $(document).ready(function () {
-        $(".o_mail_chat").css({"position": "", "top": "0", "bottom": "0", "right": "0", "height": "100%"});
-        $(".o_mail_thread").css({
-            "-webkit-box-flex:": "1",
-            "-webkit-flex": "1 0 0",
-            "flex": "1 0 0",
-            "padding": "0 0 15px 0",
-            "overflow": ""
-        });
+    var ActionManager = require('web.ActionManager');
+    var Widget = require('web.Widget');
+    var ViewManager = require('web.ViewManager');
+    var framework = require('web.framework');
+    var crash_manager = require('web.crash_manager');
+    var Dialog = require('web.Dialog');
+    var ControlPanel = require('web.ControlPanel');
+    var data = require('web.data');
+    var data_manager = require('web.data_manager');
+    var Bus = require('web.Bus');
+
+    var Action = core.Class.extend({
+        init: function (action) {
+            this.action_descr = action;
+            this.title = action.display_name || action.name;
+        },
+        restore: function () {
+            if (this.on_reverse_breadcrumb_callback) {
+                return this.on_reverse_breadcrumb_callback();
+            }
+        },
+
+        detach: function () {
+        },
+
+        destroy: function () {
+        },
+
+        set_on_reverse_breadcrumb: function (callback) {
+            this.on_reverse_breadcrumb_callback = callback;
+        },
+
+        set_scrollTop: function () {
+        },
+
+        set_fragment: function ($fragment) {
+            this.$fragment = $fragment;
+        },
+
+        get_scrollTop: function () {
+            return 0;
+        },
+
+        get_action_descr: function () {
+            return this.action_descr;
+        },
+
+        get_breadcrumbs: function () {
+            return {title: this.title, action: this};
+        },
+
+        get_nb_views: function () {
+            return 0;
+        },
+
+        get_fragment: function () {
+            return this.$fragment;
+        },
+
+        get_active_view: function () {
+            return '';
+        },
     });
 
+    var WidgetActionxs = Action.extend({
+
+        init: function (action, widget) {
+            this._super(action);
+
+            this.widget = widget;
+            if (!this.widget.get('title')) {
+                this.widget.set('title', this.title);
+            }
+            this.widget.on('change:title', this, function (widget) {
+                this.title = widget.get('title');
+            });
+        },
+
+        restore: function () {
+            var self = this;
+            return $.when(this._super()).then(function () {
+                return self.widget.do_show();
+            });
+        },
+
+        detach: function () {
+            // Hack to remove badly inserted nvd3 tooltips ; should be removed when upgrading nvd3 lib
+            $('body > .nvtooltip').remove();
+
+            return framework.detach([{widget: this.widget}]);
+        },
+
+        destroy: function () {
+            this.widget.destroy();
+        },
+    });
+
+    var ViewManagerActionxs = WidgetActionxs.extend({
+        restore: function (view_index) {
+            var _super = this._super.bind(this);
+            return this.widget.select_view(view_index).then(function () {
+                return _super();
+            });
+        },
+        set_on_reverse_breadcrumb: function (callback, scrollTop) {
+            this._super(callback);
+            this.set_scrollTop(scrollTop);
+        },
+
+        set_scrollTop: function (scrollTop) {
+        },
+
+        get_scrollTop: function () {
+            return this.widget.active_view.controller.get_scrollTop();
+        },
+
+        get_breadcrumbs: function () {
+            var self = this;
+            return this.widget.view_stack.map(function (view, index) {
+                return {
+                    title: view.controller.get('title') || self.title,
+                    index: index,
+                    action: self,
+                };
+            });
+        },
+
+        get_nb_views: function () {
+            return this.widget.view_stack.length;
+        },
+
+        get_active_view: function () {
+            return this.widget.active_view.type;
+        }
+    });
+
+    ActionManager.include({
+        push_action: function (widget, action_descr, options) {
+            var self = this;
+            var old_action_stack = this.action_stack;
+            var old_action = this.inner_action;
+            var old_widget = this.inner_widget;
+            var actions_to_destroy;
+            options = options || {};
+
+            // Empty action_stack or replace last action if requested
+            if (options.clear_breadcrumbs) {
+                actions_to_destroy = this.action_stack;
+                this.action_stack = [];
+            } else if (options.replace_last_action && this.action_stack.length > 0) {
+                actions_to_destroy = [this.action_stack.pop()];
+            }
+
+            // Instantiate the new action
+            var new_action;
+            if (widget instanceof ViewManager) {
+                new_action = new ViewManagerActionxs(action_descr, widget);
+            } else if (widget instanceof Widget) {
+                new_action = new WidgetActionxs(action_descr, widget);
+            } else {
+                new_action = new Action(action_descr);
+            }
+
+            // Set on_reverse_breadcrumb callback on previous inner_action
+            if (this.webclient && old_action) {
+                old_action.set_on_reverse_breadcrumb(options.on_reverse_breadcrumb, this.webclient.get_scrollTop());
+            }
+
+            // Update action_stack (must be done before appendTo to properly
+            // compute the breadcrumbs and to perform do_push_state)
+            this.action_stack.push(new_action);
+            this.inner_action = new_action;
+            this.inner_widget = widget;
+
+            if (widget.need_control_panel) {
+                // Set the ControlPanel bus on the widget to allow it to communicate its status
+                widget.set_cp_bus(this.main_control_panel.get_bus());
+            }
+
+            // render the inner_widget in a fragment, and append it to the
+            // document only when it's ready
+            var new_widget_fragment = document.createDocumentFragment();
+            return $.when(this.inner_widget.appendTo(new_widget_fragment)).done(function () {
+                // Detach the fragment of the previous action and store it within the action
+                if (old_action) {
+                    old_action.set_fragment(old_action.detach());
+                }
+                if (!widget.need_control_panel) {
+                    // Hide the main ControlPanel for widgets that do not use it
+                    self.main_control_panel.do_hide();
+                }
+                framework.append(self.$el, new_widget_fragment, {
+                    in_DOM: self.is_in_DOM,
+                    callbacks: [{widget: self.inner_widget}],
+                });
+                if (actions_to_destroy) {
+                    self.clear_action_stack(actions_to_destroy);
+                }
+                self.toggle_fullscreen();
+                self.trigger_up('current_action_updated', {action: new_action});
+            }).fail(function () {
+                // Destroy failed action and restore internal state
+                new_action.destroy();
+                self.action_stack = old_action_stack;
+                self.inner_action = old_action;
+                self.inner_widget = old_widget;
+            });
+        },
+    });
     PlannerLauncher.include({
         on_menu_clicked: function (menu_id) {
             if (menu_id !== undefined) {
@@ -179,3 +378,4 @@ odoo.define('enterprise_backend', function (require) {
     });
 });
 ;
+
