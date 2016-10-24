@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'Enterprise Backend',
-    'category': 'Web',
+    'category': 'Backend',
     'author': 'Mostafa Mohamed',
     'website': 'https://eg.linkedin.com/in/mostafa-mohammed-449a8786',
     'price': 69.00,
