@@ -4,8 +4,8 @@
     'category': 'Web',
     'author': 'Mostafa Mohamed',
     'website': 'https://eg.linkedin.com/in/mostafa-mohammed-449a8786',
-    'price': 70.00,
-    'currency': 'USD',
+    'price': 79.99,
+'currency': 'EUR',
     'images': [
         'images/1.png',
     ],
