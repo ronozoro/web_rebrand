@@ -13,5 +13,6 @@
     'depends': ['base', 'web'],
     'data': ['views/template.xml'],
     'auto_install': False,
+    'live_test_url': 'http://104.199.46.149:8099/web/login',
     'installable': True,
 }
