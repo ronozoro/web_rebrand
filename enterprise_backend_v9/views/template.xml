@@ -8,6 +8,11 @@
 
             </xpath>
         </template>
+        <template id="layout_inherit" name="Enterprise Layout" inherit_id="web.layout">
+            <xpath expr="//head" position="inside">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            </xpath>
+        </template>
 
         <template id="enterprise_backend_v9.menu_link">
             <t t-set="debug_param" t-value="'?&amp;debug=' if debug else ''"/>
