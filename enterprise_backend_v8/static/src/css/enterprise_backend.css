@@ -1615,6 +1615,7 @@ input[type="checkbox"]:disabled:checked:after,
 
 .openerp .oe_view_manager .oe_view_manager_body .oe_view_manager_view_kanban .oe_kanban_view {
     padding: 10px 15px;
+    overflow: auto;
 }
 
 .openerp .oe_view_manager .oe_view_manager_body .oe_view_manager_view_kanban .oe_kanban_view .oe_view_nocontent {
