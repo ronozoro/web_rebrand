@@ -1786,63 +1786,6 @@ input[type="checkbox"]:disabled:checked:after,
     padding: 15px 6px 15px 6px;
     margin: 0;
 }
-
-@media screen and (max-width: 768px) {
-    .o_web_client .openerp.oe_webclient .oe_application .oe-view-manager .oe-view-manager-content table.oe_list_content thead {
-        display: none;
-    }
-
-    .o_web_client .openerp.oe_webclient .oe_application .oe-view-manager .oe-view-manager-content table.oe_list_content tr {
-        margin-bottom: 10px;
-        display: block;
-        border-bottom: 2px solid #ddd;
-    }
-
-    .o_web_client .openerp.oe_webclient .oe_application .oe-view-manager .oe-view-manager-content table.oe_list_content th {
-        width: 100%;
-        display: block;
-    }
-
-    .o_web_client .openerp.oe_webclient .oe_application .oe-view-manager .oe-view-manager-content table.oe_list_content td,
-    .o_web_client .openerp.oe_webclient .oe_application .oe-view-manager .oe-view-manager-content table.oe_list_content th {
-        display: block;
-        text-align: right;
-        font-size: 13px;
-        border-bottom: 1px dotted #ccc;
-        min-height: 39px;
-        padding: 10px 6px;
-    }
-
-    .o_web_client .openerp.oe_webclient .oe_application .oe-view-manager .oe-view-manager-content table.oe_list_content td:last-child,
-    .o_web_client .openerp.oe_webclient .oe_application .oe-view-manager .oe-view-manager-content table.oe_list_content th:last-child {
-        border-bottom: 0;
-    }
-
-    .o_web_client .openerp.oe_webclient .oe_application .oe-view-manager .oe-view-manager-content table.oe_list_content td:before,
-    .o_web_client .openerp.oe_webclient .oe_application .oe-view-manager .oe-view-manager-content table.oe_list_content th:before {
-        content: attr(data-string);
-        float: left;
-        font-weight: bold;
-    }
-
-    .o_web_client .openerp.oe_webclient .oe_application .oe-view-manager .oe-view-manager-content table.oe_list_content td.oe_number {
-        max-width: none;
-    }
-
-    .o_web_client .openerp.oe_webclient .oe_application .oe-view-manager .oe-view-manager-content table.oe_list_content .oe_list_field_progressbar progress {
-        width: 100px;
-    }
-
-    .o_web_client .openerp.oe_webclient .oe_application .oe-view-manager .oe-view-manager-content table.oe_list_content td.oe_list_field_handle {
-        width: 100% !important;
-        padding: 10px 6px !important;
-    }
-
-    .o_web_client .openerp.oe_webclient .oe_application .oe-view-manager .oe-view-manager-content table.oe_list_content td.oe_list_field_handle .oe_list_handle {
-        padding: 4px !important;
-    }
-}
-
 @media screen and (max-width: 768px) {
     .o_web_client .openerp.oe_webclient .oe_application .o_mail_chat {
         position: absolute;
