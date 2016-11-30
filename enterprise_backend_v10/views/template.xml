@@ -7,7 +7,11 @@
                 <link rel="stylesheet" href="/enterprise_backend_v10/static/src/css/enterprise_backend.css"/>
             </xpath>
         </template>
-
+ <template id="layout_inherit" name="Enterprise Layout" inherit_id="web.layout">
+            <xpath expr="//head" position="inside">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            </xpath>
+</template>
         <template id="enterprise_backend_v10.menu_link">
             <t t-set="debug_param" t-value="'?&amp;debug=' if debug else ''"/>
             <a t-att-href="'/web%s#menu_id=%s&amp;action=%s' % (debug_param, menu['id'], menu['action'] and menu['action'].split(',')[1] or menu['children'][0]['action'] and menu['children'][0]['action'].split(',')[1] or '')"
